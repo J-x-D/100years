@@ -15,13 +15,15 @@
 
 	let isBefore = false;
 	let isToday = false;
+
+	let year;
 	$: {
 		const birthday = date;
 
 		const birthdayWeek = dayjs(birthday).week();
 		const birthdayYear = dayjs(birthday).year();
 
-		const year = yearNumber + birthdayYear;
+		year = yearNumber + birthdayYear;
 
 		isBefore =
 			dayjs().year() > year || (dayjs().year() >= year && dayjs().week() >= weekNumber + 1);
@@ -30,10 +32,11 @@
 	}
 
 	const { open } = getContext('simple-modal');
-	const showSurprise = () =>
+	const showSurprise = () => {
 		open(Popup, {
-			message: `${weekNumber} ${year}`
+			message: `Week ${weekNumber + 1} of year ${year}`
 		});
+	};
 </script>
 
 <div>
@@ -45,8 +48,9 @@
 			class:bg-red-400={isToday}
 		/>
 		<span
-			class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"
+			class="relative inline-flex rounded-full h-3 w-3"
 			class:bg-sky-900={isBefore && !isToday}
+			class:bg-sky-500={!isBefore && !isToday}
 			class:bg-red-400={isToday}
 		/>
 	</span>

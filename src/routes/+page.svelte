@@ -3,27 +3,51 @@
 	import DateInput from '$lib/components/DateInput.svelte';
 	import Modal from 'svelte-simple-modal';
 	import dayjs from 'dayjs';
+	import weekYear from 'dayjs/plugin/weekYear';
+	import weekOfYear from 'dayjs/plugin/weekOfYear';
+
+	dayjs.extend(weekOfYear);
+	dayjs.extend(weekYear);
 
 	const weeksOfYear = Array.from({ length: 52 }).map((_, index) => index);
+
 	const hundredYears = Array.from({ length: 100 }).fill(weeksOfYear);
 
 	let date = new Date('1995-03-07');
+
+	$: {
+		console.log(date);
+		const weeks = dayjs(date).week();
+		const numberOfWeeks = Array.from({ length: 52 - weeks + 1 }).map(
+			(_, index) => index + weeks - 1
+		);
+		hundredYears[0] = numberOfWeeks;
+		console.log(hundredYears[0]);
+		hundredYears[99] = Array.from({ length: weeks }).map((_, index) => index);
+		console.log(hundredYears[99]);
+	}
 </script>
 
 <div class="p-5 grid place-items-center">
-	<div class="mb-5  grid place-items-center">
+	<div class="mb-5 grid place-items-center">
 		<h1 class="text-red-500 uppercase mb-2">A Lifetime</h1>
 		<DateInput bind:date />
 	</div>
 	<div class="flex gap-1">
 		{#each hundredYears as weeks, yearIndex}
-			<div class="flex  flex-col gap-1">
+			<div class="flex flex-col gap-1 custom_year">
 				{#each weeks as week, index}
 					<Modal>
-						<Week {date} weekNumber={index} yearNumber={yearIndex} />
+						<Week {date} weekNumber={week} yearNumber={yearIndex} />
 					</Modal>
 				{/each}
 			</div>
 		{/each}
 	</div>
 </div>
+
+<style>
+	.custom_year:first-child {
+		justify-content: flex-end;
+	}
+</style>

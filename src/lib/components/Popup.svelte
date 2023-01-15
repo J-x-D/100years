@@ -2,4 +2,4 @@
 	export let message = 'Hi';
 </script>
 
-<p>🎉 {message} 🍾</p>
+<p>🎉 {message}</p>
