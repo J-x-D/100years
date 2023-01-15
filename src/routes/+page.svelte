@@ -28,9 +28,9 @@
 	}
 </script>
 
-<div class="lg:p-5 py-5 grid place-items-center">
-	<div class="mb-5 grid place-items-center">
-		<h1 class="text-red-500 italic mb-2">
+<div class="lg:p-5 py-10 grid place-items-center">
+	<div class="mb-10 grid place-items-center">
+		<h1 class="text-red-500 italic mb-5">
 			"The bad news is time flies. The good news is you're the pilot."
 		</h1>
 		<DateInput bind:date />

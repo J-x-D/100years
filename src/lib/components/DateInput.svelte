@@ -14,4 +14,4 @@
 	$: output(internal);
 </script>
 
-<input bind:value={internal} type="date" class="form-input px-4 py-3 w-80 rounded-full" />
+<input bind:value={internal} type="date" class="form-input px-4 py-3 rounded-full" />
