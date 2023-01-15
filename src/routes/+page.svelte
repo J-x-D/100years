@@ -5,6 +5,8 @@
 	import dayjs from 'dayjs';
 	import weekYear from 'dayjs/plugin/weekYear';
 	import weekOfYear from 'dayjs/plugin/weekOfYear';
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
 
 	dayjs.extend(weekOfYear);
 	dayjs.extend(weekYear);
@@ -14,18 +16,29 @@
 	const hundredYears = Array.from({ length: 100 }).fill(weeksOfYear);
 
 	let date = new Date('1995-03-07');
+	let usedFromStore = false;
 
 	$: {
-		console.log(date);
 		const weeks = dayjs(date).week();
 		const numberOfWeeks = Array.from({ length: 52 - weeks + 1 }).map(
 			(_, index) => index + weeks - 1
 		);
 		hundredYears[0] = numberOfWeeks;
-		console.log(hundredYears[0]);
 		hundredYears[99] = Array.from({ length: weeks }).map((_, index) => index);
-		console.log(hundredYears[99]);
+
+		if (browser && usedFromStore) {
+			localStorage.setItem('date', date.toISOString());
+		}
 	}
+
+	onMount(() => {
+		const storedDate = localStorage.getItem('date');
+		console.log(storedDate);
+		if (storedDate) {
+			date = new Date(storedDate);
+			usedFromStore = true;
+		}
+	});
 </script>
 
 <div class="lg:p-5 py-10 grid place-items-center">
