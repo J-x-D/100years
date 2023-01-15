@@ -28,14 +28,16 @@
 	}
 </script>
 
-<div class="p-5 grid place-items-center">
+<div class="lg:p-5 py-5 grid place-items-center">
 	<div class="mb-5 grid place-items-center">
-		<h1 class="text-red-500 uppercase mb-2">A Lifetime</h1>
+		<h1 class="text-red-500 italic mb-2">
+			"The bad news is time flies. The good news is you're the pilot."
+		</h1>
 		<DateInput bind:date />
 	</div>
-	<div class="flex gap-1">
+	<div class="flex flex-col gap-1 lg:flex-row">
 		{#each hundredYears as weeks, yearIndex}
-			<div class="flex flex-col gap-1 custom_year">
+			<div class="flex flex-row gap-1 lg:flex-col custom_year">
 				{#each weeks as week, index}
 					<Modal>
 						<Week {date} weekNumber={week} yearNumber={yearIndex} />
